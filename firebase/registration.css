@@ -1,0 +1,167 @@
+/* Styling for the body to match the dark theme and center content */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  background: linear-gradient(135deg, #1a1a1a, #2c2c2c); /* Gradient background for depth */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #fff;
+}
+
+/* Container for both login and signup sections */
+.auth-container {
+  display: flex;
+  justify-content: space-between;
+  width: 800px; /* Wider container for side-by-side layout */
+  gap: 30px; /* Increased gap for better separation */
+  padding: 40px;
+  background: rgba(42, 42, 42, 0.95); /* Semi-transparent for modern look */
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Deeper shadow for elevation */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for container */
+.auth-container:hover {
+  transform: translateY(-5px); /* Subtle lift effect */
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+
+/* Styling for individual auth sections (login and signup) */
+.auth-section {
+  width: 45%; /* Slightly less than half to account for gap */
+  padding: 20px;
+  background: #333; /* Darker background for sections */
+  border-radius: 12px;
+  transition: background 0.3s ease;
+}
+
+/* Section hover effect */
+.auth-section:hover {
+  background: #3a3a3a; /* Slightly lighter on hover */
+}
+
+/* Section heading */
+.auth-section h2 {
+  margin-bottom: 30px;
+  color: #e63946; /* Red accent for headings */
+  font-weight: 600;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-align: center;
+}
+
+/* Form group styling */
+.form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+/* Label styling */
+.form-group label {
+  display: block;
+  margin-bottom: 10px;
+  color: #ccc; /* Lighter gray for labels */
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* Input styling */
+.form-group input {
+  width: 100%;
+  padding: 12px; /* Increased padding for better touch target */
+  border: 1px solid #555; /* Slightly lighter border */
+  border-radius: 10px;
+  box-sizing: border-box;
+  background: #2a2a2a;
+  color: #fff;
+  font-size: 15px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Input focus state */
+.form-group input:focus {
+  border-color: #e63946; /* Red accent on focus */
+  box-shadow: 0 0 8px rgba(230, 57, 70, 0.3); /* Glow effect */
+  outline: none;
+}
+
+/* Button styling */
+button {
+  background: #e63946; /* Red primary color */
+  color: #fff;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+/* Button hover effect */
+button:hover {
+  background: #c72c37; /* Darker red for hover */
+  transform: scale(1.02); /* Subtle scale effect */
+}
+
+/* Button active state */
+button:active {
+  transform: scale(0.98); /* Slight press effect */
+}
+
+/* Auth link styling */
+.auth-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+/* Link styling */
+.auth-link a {
+  color: #e63946; /* Red accent for links */
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+/* Link hover effect */
+.auth-link a:hover {
+  color: #c72c37; /* Darker red for hover */
+  text-decoration: underline;
+}
+
+/* Error message styling */
+.error {
+  color: #ff6666; /* Softer red for errors */
+  margin-top: 15px;
+  font-size: 14px;
+  text-align: center;
+  min-height: 20px; /* Reserve space to prevent layout shift */
+}
+
+/* Loading message styling */
+#login-loading, #register-loading {
+  text-align: center;
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .auth-container {
+    flex-direction: column;
+    width: 90%; /* Full width on mobile */
+    padding: 20px;
+  }
+  .auth-section {
+    width: 100%; /* Full width for sections */
+    margin-bottom: 20px; /* Space between sections */
+  }
+}

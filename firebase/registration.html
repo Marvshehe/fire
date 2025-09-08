@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch Store - Authentication</title>
+  <link rel="stylesheet" href="registration.css">
+  
+</head>
+<body>
+  <div class="auth-container">
+    <!-- Login Section -->
+    <div id="login" class="auth-section">
+      <h2>Login to Your Account</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <button type="submit">Login</button>
+        <div id="login-loading" style="display: none; margin-top: 10px; color: #bbb;">Signing you in...</div>
+        <p id="loginErrorMessage" class="error"></p>
+      </form>
+      <div class="auth-link">
+        <a href="#">Forgot your password?</a>
+      </div>
+    </div>
+
+    <!-- Register Section -->
+    <div id="register" class="auth-section">
+      <h2>Create New Account</h2>
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="registerEmail">Email Address</label>
+          <input type="email" id="registerEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" required>
+        </div>
+        <button type="submit">Create Account</button>
+        <div id="register-loading" style="display: none; margin-top: 10px; color: #bbb;">Creating your account...</div>
+        <p id="registerErrorMessage" class="error"></p>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="fire.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97b26388f895a0c5',t:'MTc1NzIwODA4MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

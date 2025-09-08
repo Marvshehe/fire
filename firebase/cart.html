@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Store - Cart</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        .logout {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        main {
+            margin-top: 60px;
+            padding: 20px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 2em;
+        }
+        .cart-items {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .cart-item {
+            background-color: #222;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .cart-item img {
+            width: 50px;
+            height: auto;
+        }
+        .item-details {
+            flex: 1;
+            text-align: left;
+            margin-left: 10px;
+        }
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .remove {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .total {
+            color: #ff0000;
+            font-size: 1.5em;
+        }
+        .checkout, .track-order {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 10px;
+        }
+        .message {
+            color: green;
+            margin: 10px;
+        }
+        footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+        /* Checkout Modal */
+        #checkoutModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+        .checkout-modal-content {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .submit-proof {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Watch Store</h1>
+        <nav>
+            <a href="dashboard.html">Shop</a>
+            <a href="profile.html">Profile</a>
+            <a href="cart.html">Cart</a>
+            <button class="logout" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+    <main>
+        <h2>Your Cart</h2>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items loaded here -->
+        </div>
+        <p class="total" id="total">Total: $0</p>
+        <button class="checkout" onclick="openCheckoutModal()">Checkout</button>
+        <p class="message" id="orderMessage"></p>
+        <button class="track-order" onclick="trackOrder()">Track Order</button>
+    </main>
+    <footer>
+        <p>Watch Store</p>
+        <p>Timeless designs for every occasion.</p>
+        <div class="links">
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <p>Follow Us: [Twitter Icon] [Instagram Icon]</p>
+        <p>© 2025 Watch Store. All rights reserved.</p>
+    </footer>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="checkout-modal-content">
+            <span class="close" onclick="closeCheckoutModal()">&times;</span>
+            <h3>Upload Proof of Payment</h3>
+            <input type="file" id="paymentProof" accept="image/*">
+            <button class="submit-proof" onclick="submitProof()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
+
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function getOrders() {
+            return JSON.parse(localStorage.getItem('orders')) || [];
+        }
+
+        function saveOrders(orders) {
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        function getLastViewedStatus() {
+            return localStorage.getItem('lastViewedStatus') || 'none';
+        }
+
+        function setLastViewedStatus(status) {
+            localStorage.setItem('lastViewedStatus', status);
+        }
+
+        function loadCart() {
+            const cart = getCart();
+            const container = document.getElementById('cartItems');
+            container.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <h3>${item.name}</h3>
+                        <p class="price">$${item.price} x ${item.quantity} = $${item.price * item.quantity}</p>
+                    </div>
+                    <div class="quantity">
+                        <button onclick="changeQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="changeQuantity(${item.id}, 1)">+</button>
+                    </div>
+                    <button class="remove" onclick="removeFromCart(${item.id})">Remove</button>
+                `;
+                container.appendChild(div);
+                total += item.price * item.quantity;
+            });
+            document.getElementById('total').textContent = `Total: $${total}`;
+
+            // Load order message
+            const orders = getOrders();
+            const recentOrder = orders[orders.length - 1];
+            const messageElem = document.getElementById('orderMessage');
+            if (recentOrder) {
+                if (recentOrder.status === 'pending') {
+                    messageElem.textContent = 'Your recent order is pending confirmation.';
+                    messageElem.style.color = 'yellow';
+                } else if (recentOrder.status === 'shipped') {
+                    messageElem.textContent = 'Your recent order is being shipped.';
+                    messageElem.style.color = 'green';
+                    const lastViewed = getLastViewedStatus();
+                    if (lastViewed !== 'shipped') {
+                        alert('Your order has been confirmed and is now being shipped!');
+                        setLastViewedStatus('shipped');
+                    }
+                }
+            } else {
+                messageElem.textContent = '';
+            }
+        }
+
+        function changeQuantity(id, delta) {
+            let cart = getCart();
+            const item = cart.find(item => item.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(item => item.id !== id);
+                }
+                saveCart(cart);
+                loadCart();
+            }
+        }
+
+        function removeFromCart(id) {
+            let cart = getCart();
+            cart = cart.filter(item => item.id !== id);
+            saveCart(cart);
+            loadCart();
+        }
+
+        function openCheckoutModal() {
+            if (getCart().length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            document.getElementById('checkoutModal').style.display = 'flex';
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkoutModal').style.display = 'none';
+        }
+
+        function submitProof() {
+            const fileInput = document.getElementById('paymentProof');
+            if (!fileInput.files.length) {
+                alert('Please attach a proof of payment image!');
+                return;
+            }
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const proof = e.target.result; // base64
+                processCheckout(proof);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function processCheckout(proof) {
+            const cart = getCart();
+            let total = 0;
+            cart.forEach(item => total += item.price * item.quantity);
+            const order = {
+                id: Date.now(),
+                items: cart,
+                total,
+                proof,
+                status: 'pending'
+            };
+            let orders = getOrders();
+            orders.push(order);
+            saveOrders(orders);
+            saveCart([]);
+            closeCheckoutModal();
+            alert('Order placed! Awaiting admin confirmation.');
+            setLastViewedStatus('pending');
+            loadCart();
+        }
+
+        function trackOrder() {
+            const orders = getOrders();
+            const recentOrder = orders[orders.length - 1];
+            if (recentOrder) {
+                alert(`Order ID: ${recentOrder.id}\nStatus: ${recentOrder.status}\nTotal: $${recentOrder.total}`);
+            } else {
+                alert('No recent order.');
+            }
+        }
+
+        function logout() {
+            localStorage.clear();
+            alert('Logged out!');
+            window.location.href = 'index.html';
+        }
+
+        window.onload = loadCart;
+    </script>
+</body>
+</html>

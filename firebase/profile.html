@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Store - Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        nav a.logout {
+            background-color: #dc3545;
+            padding: 8px 12px;
+            border-radius: 4px;
+        }
+        nav a.logout:hover {
+            background-color: #c82333;
+            text-decoration: none;
+        }
+        main {
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .profile-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .profile-section h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        .profile-section p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .profile-section form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .profile-section input {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .profile-section button {
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .profile-section button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+        footer a {
+            color: white;
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Watch Store</h1>
+        <nav>
+            <a href="dashboard.html">Shop</a>
+            <a href="profile.html">Profile</a>
+            <a href="cart.html">Cart</a>
+            <a href="registration.html" class="logout">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="profile-section">
+            <h2>Manage Your Profile</h2>
+            <p>Update your account details with ease.</p>
+
+            <div>
+                <h3>Update Email</h3>
+                <form>
+                    <label for="new-email">New Email:</label>
+                    <input type="email" id="new-email" name="new-email" required>
+                    <label for="current-password-email">Current Password (for verification):</label>
+                    <input type="password" id="current-password-email" name="current-password" required>
+                    <button type="submit">Update Email</button>
+                </form>
+            </div>
+
+            <div>
+                <h3>Change Password</h3>
+                <form>
+                    <label for="old-password">Old Password:</label>
+                    <input type="password" id="old-password" name="old-password" required>
+                    <label for="new-password">New Password:</label>
+                    <input type="password" id="new-password" name="new-password" required>
+                    <label for="confirm-password">Confirm New Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Watch Store</p>
+        <div>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="registration.html">Login/Create Account</a>
+        </div>
+        <p>Follow Us: [Twitter Icon] [Instagram Icon]</p>
+        <p>© 2025 Watch Store. All rights reserved.</p>
+    </footer>
+</body>
+</html>

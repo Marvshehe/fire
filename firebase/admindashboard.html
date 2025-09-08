@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+        }
+        header {
+            background-color: #333;
+            padding: 10px 20px;
+            text-align: center;
+            position: relative;
+        }
+        .logout {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        main {
+            padding: 20px;
+        }
+        .order {
+            background-color: #222;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border-left: 4px solid #ff0000;
+        }
+        .order img {
+            max-width: 200px;
+            height: auto;
+        }
+        .confirm {
+            background-color: #00ff00;
+            color: black;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .close {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Admin Dashboard</h1>
+        <button class="logout" onclick="logout()">Logout</button>
+    </header>
+    <main>
+        <h2>Orders</h2>
+        <div id="ordersList">
+            <!-- Orders loaded here -->
+        </div>
+    </main>
+
+    <script>
+        function checkLogin() {
+            if (localStorage.getItem('adminLoggedIn') !== 'true') {
+                window.location.href = 'adminlogin.html';
+            }
+        }
+
+        function getOrders() {
+            return JSON.parse(localStorage.getItem('orders')) || [];
+        }
+
+        function saveOrders(orders) {
+            localStorage.setItem('orders', JSON.stringify(orders));
+        }
+
+        function loadOrders() {
+            const orders = getOrders();
+            const container = document.getElementById('ordersList');
+            container.innerHTML = '';
+            orders.forEach(order => {
+                const div = document.createElement('div');
+                div.className = 'order';
+                let itemsHtml = '<ul>';
+                order.items.forEach(item => {
+                    itemsHtml += `<li>${item.name} x ${item.quantity} - $${item.price * item.quantity}</li>`;
+                });
+                itemsHtml += '</ul>';
+                div.innerHTML = `
+                    <h3>Order ID: ${order.id}</h3>
+                    <p>Total: $${order.total}</p>
+                    ${itemsHtml}
+                    <p>Status: ${order.status}</p>
+                    <img src="${order.proof}" alt="Proof of Payment">
+                    ${order.status === 'pending' ? `<button class="confirm" onclick="confirmOrder(${order.id})">Confirm</button>` : ''}
+                    <button class="close" onclick="closeOrder(${order.id})">Close</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function confirmOrder(id) {
+            let orders = getOrders();
+            const order = orders.find(o => o.id === id);
+            if (order) {
+                order.status = 'shipped';
+                saveOrders(orders);
+                loadOrders();
+                alert('Order confirmed and shipped!');
+            }
+        }
+
+        function closeOrder(id) {
+            let orders = getOrders();
+            orders = orders.filter(o => o.id !== id);
+            saveOrders(orders);
+            loadOrders();
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.href = 'adminlogin.html';
+        }
+
+        window.onload = function() {
+            checkLogin();
+            loadOrders();
+        };
+    </script>
+</body>
+</html>
